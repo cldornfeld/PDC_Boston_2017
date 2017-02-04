@@ -23,6 +23,7 @@ lead_min <- read.csv("/Users/catherinedornfeld/Desktop/UW-Madison/CPL/PDC_Boston
 lead_short <- read.csv("/Users/catherinedornfeld/Desktop/UW-Madison/CPL/PDC_Boston/lead_short.csv")
 lead_python <- read.csv("/Users/catherinedornfeld/Desktop/UW-Madison/CPL/PDC_Boston/lead_python.csv")
 lead_feb4_r1 <- read.csv("/Users/catherinedornfeld/Desktop/UW-Madison/CPL/PDC_Boston/lead_feb4_r1_timecorrect.csv")
+lead_feb4_r2 <- read.csv("/Users/catherinedornfeld/Desktop/UW-Madison/CPL/PDC_Boston/lead_feb4_r2.csv")
 
 ###trying to fix the data
 # bad = "allGroups"
@@ -43,6 +44,10 @@ lead_item_r1 <- subset(lead_feb4_r1, gameCode == "51092"& newPrice < 11)
 lead_item_r2 <- subset(lead_feb4_r1, gameCode == "2416" & newPrice < 11)
 lead_cash_r1 <- subset(lead_feb4_r1, gameCode == "51092" & key == "CashingOutResource")
 lead_cash_r2 <- subset(lead_feb4_r1, gameCode == "2416" & key == "CashingOutResource")
+lead_cash_r3 <- subset(lead_feb4_r2, key == "CashingOutResource")
+
+#lead_cash_white <- subset(lead_feb4_r2, key == 'CashingOutResources' & group == "1")
+#lead_cash_red <- subset(lead_feb4_r2, key == 'CashingOutResources' & group == "1")
 
 #lead_concise$StockPrice <- ifelse(lead_concise$key == "StockPriceChange",1,0)
 #lead_no555 <- subset(lead_short, newPrice > 0.01 | newPrice < 11) 
@@ -115,6 +120,7 @@ qplot(year, cash, data = lead_cash_r2, color = group, size = price)
 #cash over time by groups
 lead_cash_r1$group2 <- factor(lead_cash_r1$group, levels = c('0','1','2','3','4','6','7'))
 lead_cash_r2$group2 <- factor(lead_cash_r2$group, levels = c('0','1','2','3','4','6','7'))
+
 ggplot(lead_cash_r1, aes(year,cash)) +
   geom_point(aes(color=group)) +
   geom_smooth(method="lm") +
@@ -125,8 +131,12 @@ ggplot(lead_cash_r2, aes(year,cash)) +
   geom_smooth(method="lm") +
   coord_cartesian() +
   scale_color_gradient()
+ggplot(lead_cash_r3, aes(year,cash)) +
+  geom_point(aes(color=group)) +
+  geom_smooth(method="lm") +
+  coord_cartesian() +
+  scale_color_gradient()
 
 #for CPL
 qplot(newPrice, data = lead_item, color = item) #interesting
 qplot(description, data = lead_item, color = item) #interesting - category size
-
